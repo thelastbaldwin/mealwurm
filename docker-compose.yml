@@ -1,0 +1,14 @@
+services:
+  db:
+    container_name: mealwyrm_db
+    image: postgres:latest
+    restart: unless-stopped # Always restart the container if it stops unless stopped manually
+    environment:
+      POSTGRES_DB: mealwyrm
+      POSTGRES_USER: mealwyrm
+      POSTGRES_PASSWORD:  mealwyrm
+    ports:
+      - "5432:5432" # Map port 5432 of the container to port 5432 on the host
+    volumes:
+      - ./.db:/var/lib/postgresql/data
+
