@@ -1,4 +1,4 @@
-# Mealwyrm
+# Mealwurm
 
 A recipe management system
 

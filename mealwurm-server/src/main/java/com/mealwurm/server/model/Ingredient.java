@@ -15,28 +15,8 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Entity
 public class Ingredient extends BaseEntity {
-    public enum Unit {
-        NONE,
-        CUP,
-        GALLON,
-        GRAM,
-        KILOGRAM,
-        LITER,
-        MILLIGRAM,
-        MILLILITER,
-        OUNCE,
-        PINT,
-        POUND,
-        QUART,
-        TABLESPOON,
-        TEASPOON
-    }
 
-    private String name;
-    // divided, chilled, etc.
-    private String modifier;
-    private Unit unit;
-    private float quantity;
+    private String text;
     private int ingredientOrder;
 
     // many ingredients to one recipe

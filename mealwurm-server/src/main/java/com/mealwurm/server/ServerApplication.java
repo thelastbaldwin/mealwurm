@@ -58,25 +58,17 @@ public class ServerApplication {
 				// make 3 fake ingredients
 				Ingredient[] ingredients = {
 						Ingredient.builder()
-								.unit(Ingredient.Unit.NONE)
-								.name(faker.dragonBall().character())
+								.text(faker.number().numberBetween(1, 5) + "C " + faker.dragonBall().character())
 								.recipe(recipe)
-								.quantity(faker.number().numberBetween(1, 5))
 								.ingredientOrder(0)
 								.build(),
 						Ingredient.builder()
-								.unit(Ingredient.Unit.NONE)
-								.name(faker.dragonBall().character())
-								.recipe(recipe)
-								.modifier("divided")
-								.quantity(faker.number().numberBetween(1, 5))
+								.text(faker.number().numberBetween(1, 5) + "T " + faker.dragonBall().character())
 								.ingredientOrder(1)
 								.build(),
 						Ingredient.builder()
-								.unit(Ingredient.Unit.NONE)
-								.name(faker.dragonBall().character())
+								.text(faker.number().numberBetween(1, 5) + "g " + faker.dragonBall().character())
 								.recipe(recipe)
-								.quantity(faker.number().numberBetween(1, 5))
 								.ingredientOrder(2)
 								.build()
 				};
