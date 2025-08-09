@@ -1,5 +1,6 @@
-package com.mealwurm.server.config;
+package com.mealwurm.server.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,12 +15,14 @@ import java.util.List;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     @Autowired
     private Environment environment;
+    private final JwtConverter jwtConverter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -36,10 +39,10 @@ public class SecurityConfig {
         });
 
         http
-                .authorizeHttpRequests(auth -> auth
-                        .anyRequest()
-                        .authenticated())
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(withDefaults()));
+            .authorizeHttpRequests(auth -> auth
+                .anyRequest()
+                .authenticated())
+            .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtConverter)));
 
         return http.build();
     }

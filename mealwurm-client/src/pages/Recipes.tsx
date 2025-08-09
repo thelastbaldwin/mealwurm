@@ -1,19 +1,20 @@
 import { useEffect } from "react";
 import { Container } from "../components";
 import fetchWrapper from "../api/fetchWrapper";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth, withAuthenticationRequired } from "react-oidc-context";
+import Loading from "./Loading";
 
 const fetchRecipes = async (token: string) => {
   const result = await fetchWrapper.get("/recipes", token);
   return result;
 };
 
-function Recipes() {
-  const { getAccessTokenSilently, user } = useAuth0();
+const PrivateRecipes = () => {
+  const { user } = useAuth();
 
   useEffect(() => {
     const loadDependencies = async () => {
-      const token = await getAccessTokenSilently();
+      const token = user?.access_token || "";
       const recipes = await fetchRecipes(token);
 
       console.log(recipes);
@@ -32,6 +33,10 @@ function Recipes() {
       </section>
     </Container>
   );
-}
+};
+
+const Recipes = withAuthenticationRequired(PrivateRecipes, {
+  OnRedirecting: () => <Loading />,
+});
 
 export default Recipes;

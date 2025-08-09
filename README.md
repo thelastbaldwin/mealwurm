@@ -11,7 +11,7 @@ A recipe management system
 
 ## Setup
 
-### 1. Setup an Auth0 API
+### 1. Setup Keycloak
 
 Create an auth0 application. You will need a few configuration values for the server and client to run. These can be found in their respective README files and on the main settings of the auth0 application.
 

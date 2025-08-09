@@ -7,10 +7,10 @@ import {
   Popover,
 } from "react-aria-components";
 import { AlignJustify, Worm } from "lucide-react";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth } from "react-oidc-context";
 
 const Header = () => {
-  const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const { isAuthenticated, signinRedirect, signoutRedirect } = useAuth();
   const navigate = useNavigate();
 
   // useEffect(() => {
@@ -22,13 +22,6 @@ const Header = () => {
   //     getToken();
   //   }
   // }, [getAccessTokenSilently, isAuthenticated]);
-
-  const logoutWithRedirect = () =>
-    logout({
-      logoutParams: {
-        returnTo: window.location.origin,
-      },
-    });
 
   return (
     <header className="flex justify-between items-center mt-3">
@@ -58,7 +51,7 @@ const Header = () => {
               )} */}
             {!isAuthenticated && (
               <MenuItem
-                onAction={() => loginWithRedirect()}
+                onAction={signinRedirect}
                 className="cursor-pointer hover:bg-zinc-100 p-1"
               >
                 Log in
@@ -79,7 +72,7 @@ const Header = () => {
                   Recipes
                 </MenuItem>
                 <MenuItem
-                  onAction={() => logoutWithRedirect()}
+                  onAction={signoutRedirect}
                   className="cursor-pointer hover:bg-zinc-100 p-1"
                 >
                   Log out

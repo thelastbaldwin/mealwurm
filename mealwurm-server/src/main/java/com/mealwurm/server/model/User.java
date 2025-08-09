@@ -23,7 +23,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
     private String username;
+
+    private String email;
 
     @CreatedDate
     private LocalDateTime createdAt;

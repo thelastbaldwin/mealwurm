@@ -1,8 +1,6 @@
 import { Container } from "../components";
 
 function Main() {
-  console.log("API_URL", import.meta.env.VITE_API_URL);
-
   return (
     <Container>
       <section className="flex flex-1 justify-center items-center">

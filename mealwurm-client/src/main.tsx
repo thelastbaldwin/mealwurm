@@ -1,5 +1,8 @@
 import { Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
+import { BrowserRouter, Route, Routes } from "react-router";
+import { UserManager } from "oidc-client-ts";
+import { AuthProvider } from "react-oidc-context";
 import Loading from "./pages/Loading.tsx";
 import Main from "./pages/Main.tsx";
 
@@ -8,20 +11,16 @@ import "./index.css";
 
 const Recipes = lazy(() => import("./pages/Recipes.tsx"));
 
-import { BrowserRouter, Route, Routes } from "react-router";
-import { Auth0Provider } from "@auth0/auth0-react";
-
-const providerConfig = {
-  domain: import.meta.env.VITE_AUTH0_DOMAIN,
-  clientId: import.meta.env.VITE_AUTH0_CLIENT_ID,
-  authorizationParams: {
-    redirect_uri: window.location.origin,
-    audience: import.meta.env.VITE_AUTH0_AUDIENCE,
-  },
-};
+const userManager = new UserManager({
+  authority: import.meta.env.VITE_AUTH_DOMAIN,
+  client_id: import.meta.env.VITE_AUTH_CLIENT_ID,
+  redirect_uri: import.meta.env.VITE_AUTH_REDIRECT_URI,
+  post_logout_redirect_uri: window.location.origin,
+  monitorSession: true,
+});
 
 createRoot(document.getElementById("root")!).render(
-  <Auth0Provider {...providerConfig}>
+  <AuthProvider userManager={userManager}>
     <BrowserRouter>
       <Routes>
         <Route
@@ -43,5 +42,5 @@ createRoot(document.getElementById("root")!).render(
         <Route path="loading" element={<Loading />} />
       </Routes>
     </BrowserRouter>
-  </Auth0Provider>
+  </AuthProvider>
 );
