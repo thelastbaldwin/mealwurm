@@ -4,10 +4,9 @@ The client requires the following environment variables to be set
 
 ```
 VITE_API_URL
-VITE_AUTH0_DOMAIN
-VITE_AUTH0_CLIENT_ID
-VITE_AUTH0_AUDIENCE
-VITE_AUTH0_REDIRECT_URI
+VITE_AUTH_DOMAIN
+VITE_AUTH_CLIENT_ID
+VITE_AUTH_REDIRECT_URI
 ```
 
 # React + TypeScript + Vite
