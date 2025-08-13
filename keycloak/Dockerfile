@@ -1,12 +1,31 @@
-# bind a differet port based on root env.local. Does it require rebuilding?
-# mount the themes directory to /themes within the container
+FROM quay.io/keycloak/keycloak:26.1.2 AS development
+ENTRYPOINT [ "/opt/keycloak/bin/kc.sh" ]
 
-# use the following cli args
-# --spi-theme--static-max-age=-1 
-# --spi-theme--cache-themes=false 
-# --spi-theme--cache-templates=false
+ARG KEYCLOAK_ADMIN
+ARG KEYCLOAK_ADMIN_PASSWORD
+ARG KC_HOSTNAME_PORT=8080
+ARG POSTGRES_DB
+ARG POSTGRES_DB_PORT
+ARG POSTGRES_PASS
+ARG POSTGRES_USER
+
+ENV KC_DB=postgres
+ENV KC_HOSTNAME=localhost
+ENV KC_SPI_THEME_STATIC_MAX_AGE=1
+ENV KC_SPI_THEME_CACHE_THEMES=false
+ENV KC_SPI_THEME_CACHE_TEMPLATES=false
+
+ENV KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
+ENV KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
+ENV KC_HOSTNAME_PORT=${KC_HOSTNAME_PORT}
+ENV KC_DB_URL="jdbc:postgresql://host.docker.internal:${POSTGRES_DB_PORT}/${POSTGRES_DB}"
+ENV KC_DB_PASSWORD=${POSTGRES_PASS}
+ENV KC_DB_USERNAME=${POSTGRES_USER}
+
+ENV KC_HOSTNAME_STRICT_BACKCHANNEL=false
+ENV KC_HTTP_ENABLED=true
+ENV KC_HOSTNAME_STRICT_HTTPS=false
+ENV KC_HEALTH_ENABLED=true
 
 # ensure the keycloak server starts in dev mode
-FROM quay.io/keycloak/keycloak:26.1.2
-ENTRYPOINT [ "/opt/keycloak/bin/kc.sh" ]
 CMD [ "start-dev" ]

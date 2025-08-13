@@ -1,14 +1,41 @@
 services:
   db:
-    container_name: mealwyrm_db
-    image: postgres:latest
-    restart: unless-stopped # Always restart the container if it stops unless stopped manually
-    environment:
-      POSTGRES_DB: mealwyrm
-      POSTGRES_USER: mealwyrm
-      POSTGRES_PASSWORD:  mealwyrm
-    ports:
-      - "5432:5432" # Map port 5432 of the container to port 5432 on the host
+      container_name: mealwurm_db
+      build:
+        context: ./db
+      # restart: unless-stopped # Always restart the container if it stops unless stopped manually
+      environment:
+        POSTGRES_DB: ${POSTGRES_DB}
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD:  ${POSTGRES_PASS}
+      ports:
+        - "${POSTGRES_DB_PORT}:5432" # Map port 5432 of the container to port 5432 on the host
+      volumes:
+        - ./db/data:/var/lib/postgresql/data
+      networks:
+        - keycloak_network
+  keycloak:
+    container_name: keycloak
+    build:
+      context: './keycloak'
+      args:
+        KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+        KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+        KC_HOSTNAME_PORT: ${KC_HOSTNAME_PORT}
+        POSTGRES_DB: ${POSTGRES_DB}
+        POSTGRES_DB_PORT: ${POSTGRES_DB_PORT}
+        POSTGRES_PASS: ${POSTGRES_PASS}
+        POSTGRES_USER: ${POSTGRES_USER}
     volumes:
-      - ./.db:/var/lib/postgresql/data
+      - ./keycloak/themes/mealwurm:/opt/keycloak/themes/mealwurm
+    # restart: always
+    ports: 
+      - ${KC_HOSTNAME_PORT}:8080
+    networks:
+        - keycloak_network
+    depends_on:
+      - db
 
+networks:
+  keycloak_network:
+    driver: bridge

@@ -5,6 +5,7 @@ import com.mealwurm.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -12,16 +13,12 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public User addUser(String username, String email, String password) {
-        User newUser = User.builder()
-                .username(username)
-                .build();
-
-        return userRepository.save(newUser);
-    }
-
-    // get this information from the jwt
-    public String getCurrentUserId() {
-        return "";
+    public Optional<User> getUserById(UUID id){
+        try{
+            return userRepository.findById(id);
+        } catch(IllegalArgumentException illegalArgumentException){
+            // handle badly formed UUID
+            return Optional.empty();
+        }
     }
 }

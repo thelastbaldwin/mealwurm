@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 public class RecipeController {
@@ -20,7 +21,7 @@ public class RecipeController {
     RecipeService recipeService;
 
     @GetMapping("/recipes/{recipeId}")
-    public ResponseEntity<Recipe> getRecipe(@PathVariable String recipeId) {
+    public ResponseEntity<Recipe> getRecipe(@PathVariable UUID recipeId) {
         Optional<Recipe> recipe = recipeService.getRecipeByRecipeId(recipeId);
         return ResponseEntity.status(recipe.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK).body(recipe.orElse(null));
     }

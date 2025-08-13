@@ -22,10 +22,9 @@ public class RecipeService {
         return recipeRepository.findAll();
     }
 
-    public Optional<Recipe> getRecipeByRecipeId(String recipeId) {
+    public Optional<Recipe> getRecipeByRecipeId(UUID recipeId) {
         try {
-            var res = UUID.fromString(recipeId);
-            return recipeRepository.findById(res);
+            return recipeRepository.findById(recipeId);
         } catch (IllegalArgumentException illegalArgumentException) {
             // handle badly formed UUID
             return Optional.empty();

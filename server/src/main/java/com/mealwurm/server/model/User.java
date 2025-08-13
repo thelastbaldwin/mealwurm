@@ -16,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "userMealwyrm")
+@Table(name = "userEntity")
 @EntityListeners(AuditingEntityListener.class)
 public class User {
 
@@ -25,13 +25,9 @@ public class User {
     private UUID id;
 
     private String username;
-
+    private String firstName;
+    private String lastName;
     private String email;
-
-    @CreatedDate
-    private LocalDateTime createdAt;
-    @LastModifiedDate
-    private LocalDateTime lastModifiedAt;
 
     // one user to many recipes
     @OneToMany(mappedBy = "user")

@@ -1,3 +1,12 @@
 .login-pf body {
-    background: DimGrey none;
+    background: white none;
+}
+
+#kc-header {
+    color: black;
+}
+
+.login-pf-page .card-pf{
+    border-top: 0;
+    box-shadow: none;
 }
