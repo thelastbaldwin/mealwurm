@@ -13,16 +13,6 @@ const Header = () => {
   const { isAuthenticated, signinRedirect, signoutRedirect } = useAuth();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const getToken = async () => {
-  //     const token = await getAccessTokenSilently();
-  //     console.log(token);
-  //   };
-  //   if (isAuthenticated) {
-  //     getToken();
-  //   }
-  // }, [getAccessTokenSilently, isAuthenticated]);
-
   return (
     <header className="flex justify-between items-center mt-3">
       <div className="flex justify-start items-baseline">
@@ -37,24 +27,12 @@ const Header = () => {
         </Button>
         <Popover>
           <Menu className="text-right">
-            {/* {!isAuthenticated && (
-                <NavItem>
-                  <Button
-                    id="qsLoginBtn"
-                    color="primary"
-                    className="btn-margin"
-                    onClick={() => loginWithRedirect()}
-                  >
-                    Log in
-                  </Button>
-                </NavItem>
-              )} */}
             {!isAuthenticated && (
               <MenuItem
                 onAction={signinRedirect}
                 className="cursor-pointer hover:bg-zinc-100 p-1"
               >
-                Log in
+                Log in / Register
               </MenuItem>
             )}
             {isAuthenticated && (

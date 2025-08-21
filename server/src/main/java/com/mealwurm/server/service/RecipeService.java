@@ -1,6 +1,5 @@
 package com.mealwurm.server.service;
 
-import com.mealwurm.server.model.Ingredient;
 import com.mealwurm.server.model.Recipe;
 import com.mealwurm.server.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +16,8 @@ public class RecipeService {
     @Autowired
     RecipeRepository recipeRepository;
 
-    // TODO: filter by user
-    public List<Recipe> getRecipes() {
-        return recipeRepository.findAll();
+    public List<Recipe> getRecipesByUserId(UUID userId) {
+        return recipeRepository.findAllByUserIdEquals(userId);
     }
 
     public Optional<Recipe> getRecipeByRecipeId(UUID recipeId) {

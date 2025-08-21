@@ -5,5 +5,5 @@ init-db-keyloak:
 
 # use this to create a database backup. This will not be under version control. 
 backup-db:
-	mkdir -p .db/init
+	mkdir -p db/init
 	docker exec mealwurm_db pg_dump -U mealwurm -p 5432 mealwurm > db/init/init.sql

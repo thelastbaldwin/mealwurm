@@ -5,10 +5,12 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 import java.util.Collection;
+import java.util.UUID;
 
 
 public class MealwurmAuthenticationToken extends JwtAuthenticationToken {
-    private final String userId;
+    private final UUID userId;
+    private final Collection<? extends GrantedAuthority> authorities;
 
     public MealwurmAuthenticationToken(
         Jwt jwt,
@@ -17,10 +19,12 @@ public class MealwurmAuthenticationToken extends JwtAuthenticationToken {
 
         super(jwt, authorities);
 
-        this.userId = userId;
+        this.authorities = authorities;
+        this.userId = UUID.fromString(userId);
     }
 
-    public String getUserId(){
+    public UUID getUserId(){
         return userId;
     }
+    public Collection<? extends GrantedAuthority> getRoles() { return authorities; }
 }

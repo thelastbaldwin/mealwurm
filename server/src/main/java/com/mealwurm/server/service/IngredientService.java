@@ -16,8 +16,8 @@ public class IngredientService {
     @Autowired
     IngredientRepository ingredientRepository;
 
-    public List<Ingredient> getIngredientsByRecipeId(String recipeId) {
-        return ingredientRepository.findAllByRecipeIdOrderByIngredientOrderDesc(UUID.fromString(recipeId));
+    public List<Ingredient> getIngredientsByRecipeId(UUID recipeId) {
+        return ingredientRepository.findAllByRecipeIdOrderByIngredientOrderDesc(recipeId);
     }
 
     public void addIngredientsToRecipe(List<Ingredient> ingredients, Recipe recipe) {
